@@ -1,3 +1,7 @@
+namespace SpriteKind {
+    export const FIshy = SpriteKind.create()
+    export const RedFishy = SpriteKind.create()
+}
 /**
  * 8 Concepts Learned (Pick the 8 you used, delete the others):
  * 
@@ -37,34 +41,50 @@
  * 
  * - ex. enemy decreases player life
  */
-let mySprite = sprites.create(img`
-    ..............ffffff....
-    .............f2feeeeff..
-    ............f222feeeeff.
-    ....eeeee...feeeeffeeef.
-    ....1..cee.fe2222eeffff.
-    ...11..ceeef2effff222ef.
-    ...1....ceecffeeefffffff
-    ..11.....ceece44fbe44eff
-    ..1.......ceceddf14d4eef
-    .e1.......cccdeddd4eeef.
-    .eeeee.....edd4e44eeff..
-    .11.eeee....ee442222f...
-    .1....eeee...f2e2222f...
-    .1.....eeee..f554444f...
-    .1eeeeeeeeeeeeeeeeeeeeee
-    .1......eeeeeeeeeeeeeee.
-    .1.....eeee.eeeeeeee....
-    .1......................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
+sprites.onOverlap(SpriteKind.Player, SpriteKind.RedFishy, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    Ghost_4.destroy()
+})
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    controller.moveSprite(mySprite, 80, 80)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    Ghost_1.destroy()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.FIshy, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    Ghost_3.destroy()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    Ghost_2.destroy()
+})
+let Ghost_4: Sprite = null
+let Ghost_3: Sprite = null
+let Ghost_2: Sprite = null
+let Ghost_1: Sprite = null
+let mySprite: Sprite = null
+mySprite = sprites.create(img`
+    ...........fffffff...ccfff..........
+    ..........fbbbbbbbffcbbbbf..........
+    ..........fbb111bbbbbffbf...........
+    ..........fb11111ffbbbbff...........
+    ..........f1cccc1ffbbbbbcff.........
+    ..........ffc1c1c1bbcbcbcccf........
+    ...........fcc3331bbbcbcbcccf..ccccc
+    ............c333c1bbbcbcbccccfcddbbc
+    ............c333c1bbbbbbbcccccddbcc.
+    ............c333c11bbbbbccccccbbcc..
+    ...........cc331c11bbbbccccccfbccf..
+    ...........cc13c11cbbbcccccbbcfccf..
+    ...........c111111cbbbfdddddc.fbbcf.
+    ............cc1111fbdbbfdddc...fbbf.
+    ..............cccfffbdbbfcc.....fbbf
+    ....................fffff........fff
     `, SpriteKind.Player)
 mySprite.setPosition(109, 28)
-let Ghost_1 = sprites.create(img`
+Ghost_1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . c c c c . . . . 
     . . . . . . c c d d d d c . . . 
@@ -81,9 +101,9 @@ let Ghost_1 = sprites.create(img`
     . . . . f f 4 4 4 4 c d b c . . 
     . . . . . . f f f f d d d c . . 
     . . . . . . . . . . c c c . . . 
-    `, SpriteKind.Enemy)
+    `, SpriteKind.Food)
 Ghost_1.setPosition(23, 63)
-let Ghost_2 = sprites.create(img`
+Ghost_2 = sprites.create(img`
     . . . . . . . . c c c c . . . . 
     . . . . . . c c d d d d c . . . 
     . . . . . c c c c c c d c . . . 
@@ -102,7 +122,7 @@ let Ghost_2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Enemy)
 Ghost_2.setPosition(62, 72)
-let Ghost_3 = sprites.create(img`
+Ghost_3 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . c c c c . . . 
     . . . . . . . c c d d d d c . . 
@@ -119,9 +139,9 @@ let Ghost_3 = sprites.create(img`
     . . . . f f 9 9 9 9 9 d b c . . 
     . . . . . . f f f f d d d c . . 
     . . . . . . . . . . c c c . . . 
-    `, SpriteKind.Enemy)
+    `, SpriteKind.FIshy)
 Ghost_3.setPosition(114, 64)
-let Ghost_4 = sprites.create(img`
+Ghost_4 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . c c c c c . . . . 
     . . . . . . c d d d d d c . . . 
@@ -138,7 +158,7 @@ let Ghost_4 = sprites.create(img`
     . . f f f d 2 2 2 2 c d d c . . 
     . . . . . f f f f f c c c . . . 
     . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Enemy)
+    `, SpriteKind.RedFishy)
 Ghost_4.setPosition(138, 66)
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999555559999999999999955555555555555555555555555555
@@ -262,3 +282,8 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
+Ghost_1.setBounceOnWall(true)
+Ghost_2.setBounceOnWall(true)
+Ghost_3.setBounceOnWall(true)
+Ghost_4.setBounceOnWall(true)
+info.startCountdown(10)
